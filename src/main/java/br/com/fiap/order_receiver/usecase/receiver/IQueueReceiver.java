@@ -4,6 +4,6 @@ import br.com.fiap.order_receiver.controller.dto.OrderCreatedDto;
 
 public interface IQueueReceiver {
 
-    OrderCreatedDto receive();
+    OrderCreatedDto receive(OrderCreatedDto orderCreatedDto);
 
 }

@@ -2,7 +2,7 @@ package br.com.fiap.order_receiver.controller;
 
 import br.com.fiap.order_receiver.controller.dto.CreateOrderDto;
 import br.com.fiap.order_receiver.controller.dto.OrderCreatedDto;
-import br.com.fiap.order_receiver.usecase.receiver.ReceiveFromQueueUseCase;
+import br.com.fiap.order_receiver.usecase.finder.FindOrderUseCase;
 import br.com.fiap.order_receiver.usecase.sender.SendToQueueUseCase;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 public class ReceiverController {
 
     private final SendToQueueUseCase queueSender;
-    private final ReceiveFromQueueUseCase queueReceiver;
+    private final FindOrderUseCase findOrderUseCase;
 
-    public ReceiverController(SendToQueueUseCase queueSender, ReceiveFromQueueUseCase queueReceiver) {
+    public ReceiverController(SendToQueueUseCase queueSender, FindOrderUseCase findOrderUseCase) {
         this.queueSender = queueSender;
-        this.queueReceiver = queueReceiver;
+        this.findOrderUseCase = findOrderUseCase;
     }
 
     @PostMapping
@@ -23,9 +23,9 @@ public class ReceiverController {
         queueSender.send(createOrderDto);
     }
 
-    @GetMapping
-    public OrderCreatedDto getOrder() {
-        return queueReceiver.receive();
+    @GetMapping("/{id}")
+    public OrderCreatedDto getOrder(@PathVariable Long id) {
+        return findOrderUseCase.findById(id);
     }
 
 }
