@@ -8,6 +8,5 @@ public record CreateOrderDto(
         List<ProductVOrderDto> products,
         Long clientId,
         PaymentDto payment,
-        StatusOrder statusOrder
-) {
+        StatusOrder statusOrder) {
 }
