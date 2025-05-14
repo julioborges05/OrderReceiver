@@ -1,5 +1,62 @@
-version: '2'
+version: '3.8'
 services:
+  receiver:
+    image: julioborges05/ordermanagement-receiver
+    container_name: ordermanagement-receiver
+    environment:
+      - ORDER_SERVICE_URL=http://receiver:8080
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:9092
+    depends_on:
+      - broker
+    ports:
+      - "8080:8080"
+
+  product-db:
+    image: postgres:latest
+    container_name: product-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=product-db
+    ports:
+      - "5433:5432"
+
+  product:
+    image: anagenova/ordermanagement-product
+    container_name: ordermanagement-product
+    environment:
+      - DB_URL=jdbc:postgresql://product-db:5432/product-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - product-db
+      - receiver
+    ports:
+      - "8081:8080"
+
+  client-db:
+    image: postgres:latest
+    container_name: client-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=client-db
+    ports:
+      - "5434:5432"
+
+  client:
+    image: julioborges05/ordermanagement-client
+    container_name: ordermanagement-client
+    environment:
+      - DB_URL=jdbc:postgresql://client-db:5432/client-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - client-db
+      - receiver
+    ports:
+      - "8082:8080"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
     hostname: zookeeper
