@@ -17,12 +17,11 @@ public class SendToQueueUseCase implements IQueueSender {
     @Override
     public void send(CreateOrderDto createOrderDto) {
         try {
-            Future<?> future = kafkaTemplate.send("order-topic", createOrderDto);
+            Future<?> future = kafkaTemplate.send("create-order", createOrderDto);
 
             future.get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
