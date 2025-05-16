@@ -1,5 +1,49 @@
 version: '3.8'
 services:
+  order-db:
+    image: postgres:latest
+    container_name: order-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=order-db
+    ports:
+      - "5436:5432"
+
+  order:
+    image: dnrmth/ordermanagement-order:latest
+    container_name: ordermanagement-order
+    environment:
+      - DB_URL=jdbc:postgresql://order-db:5432/order-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - order-db
+    ports:
+      - "8084:8080"
+
+  payment-db:
+    image: postgres:latest
+    container_name: payment-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=payment-db
+    ports:
+      - "5435:5432"
+
+  payment:
+    image: marques67/payment:1.0
+    container_name: ordermanagement-payment
+    environment:
+      - DB_URL=jdbc:postgresql://payment-db:5432/payment-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - payment-db
+    ports:
+      - "8083:8080"
+
   receiver:
     image: julioborges05/ordermanagement-receiver
     container_name: ordermanagement-receiver
