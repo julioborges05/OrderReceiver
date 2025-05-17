@@ -11,7 +11,7 @@ services:
       - "5437:5432"
 
   inventory:
-    image:  julioborges05/ordermanagement-inventory
+    image:  rodrigodiasflamia/inventory
     container_name: ordermanagement-inventory
     environment:
       - DB_URL=jdbc:postgresql://inventory-db:5432/inventory-db
@@ -40,10 +40,10 @@ services:
       - DB_USER=user
       - DB_PASSWORD=password
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
-      - PAYMENT_SERVICE_URL=http://payment:8083
-      - CLIENT_SERVICE_URL=http://client:8082
-      - PRODUCT_SERVICE_URL=http://product:8081
-      - STOCK_SERVICE_URL=http://inventory:8085
+      - PAYMENT_SERVICE_URL=http://payment:8080/payment
+      - CLIENT_SERVICE_URL=http://client:8082/client/api
+      - PRODUCT_SERVICE_URL=http://product:8080/product
+      - STOCK_SERVICE_URL=http://inventory:8080/inventory
     depends_on:
       - order-db
       - broker
