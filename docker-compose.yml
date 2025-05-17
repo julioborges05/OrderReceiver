@@ -48,7 +48,7 @@ services:
       - order-db
       - broker
     ports:
-      - "8084:8080"
+      - "8084:8089"
 
   payment-db:
     image: postgres:latest
@@ -76,7 +76,7 @@ services:
     image: julioborges05/ordermanagement-receiver
     container_name: ordermanagement-receiver
     environment:
-      - ORDER_SERVICE_URL=http://receiver:8080
+      - ORDER_SERVICE_URL=http://receiver:8089
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
     depends_on:
       - broker

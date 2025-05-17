@@ -5,7 +5,6 @@ import br.com.fiap.order_receiver.domain.enums.StatusOrder;
 import java.util.List;
 
 public record OrderCreatedDto(
-        Long id,
         List<ProductVOrderDto> products,
         Long clientId,
         PaymentDto payment,
