@@ -76,7 +76,7 @@ services:
     image: julioborges05/ordermanagement-receiver
     container_name: ordermanagement-receiver
     environment:
-      - ORDER_SERVICE_URL=http://receiver:8089
+      - ORDER_SERVICE_URL=http://order:8089/order
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
     depends_on:
       - broker
