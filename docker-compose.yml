@@ -43,6 +43,7 @@ services:
       - PAYMENT_SERVICE_URL=http://payment:8083
       - CLIENT_SERVICE_URL=http://client:8082
       - PRODUCT_SERVICE_URL=http://product:8081
+      - STOCK_SERVICE_URL=http://inventory:8085
     depends_on:
       - order-db
       - broker
