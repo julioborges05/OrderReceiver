@@ -39,7 +39,7 @@ services:
       - DB_URL=jdbc:postgresql://order-db:5432/order-db
       - DB_USER=user
       - DB_PASSWORD=password
-      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:9092
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
       - PAYMENT_SERVICE_URL=http://payment:8083
       - CLIENT_SERVICE_URL=http://client:8082
       - PRODUCT_SERVICE_URL=http://product:8081
@@ -76,7 +76,7 @@ services:
     container_name: ordermanagement-receiver
     environment:
       - ORDER_SERVICE_URL=http://receiver:8080
-      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:9092
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
     depends_on:
       - broker
     ports:
@@ -151,7 +151,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://broker:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
